@@ -1,1 +1,3 @@
-# Actions-SFT1200-OpenWrt
+# Build OpenWrt
+
+自动编译我的SFT1200固件
