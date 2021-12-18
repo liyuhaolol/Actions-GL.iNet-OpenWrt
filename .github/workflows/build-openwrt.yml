@@ -70,8 +70,8 @@ jobs:
         python3 setup.py -c config-siflower-18.x.yml
         echo "config-siflower-18.x.yml完毕"
         cd openwrt-18.06/siflower/openwrt-18.06
-        ./scripts/gen_config.py target_siflower_gl-sf1200
-        echo "target_siflower_gl-sf1200完毕"
+        ./scripts/gen_config.py target_siflower_gl-sft1200
+        echo "target_siflower_gl-sft1200完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         echo "helloworld完毕"
