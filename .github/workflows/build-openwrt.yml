@@ -64,7 +64,7 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/zheshifandian/gl-infra-builder.git
+        git clone https://github.com/gl-inet/gl-infra-builder.git
         echo "源码抓取完毕"
         cd gl-infra-builder
         python3 setup.py -c config-siflower-18.x.yml
