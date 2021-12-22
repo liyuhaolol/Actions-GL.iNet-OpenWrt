@@ -34,8 +34,8 @@ jobs:
         echo "update完成"
         sudo wget https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
         sudo tar -C /usr/local -xzf go1.17.5.linux-amd64.tar.gz
-        sudo export PATH=$PATH:/usr/local/go/bine
-        cho "golang完成"
+        sudo export PATH=$PATH:/usr/local/go/bin
+        echo "golang完成"
         
     - name: Rclone-Install
       run: wget 'https://raw.githubusercontent.com/wekingchen/my-file/master/rclone/rclone.zip' --no-check-certificate && sudo unzip rclone.zip && sudo chmod a+x rclone && sudo rm -f rclone.zip
