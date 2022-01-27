@@ -45,7 +45,7 @@ jobs:
           $RCLONE_CONFIG
           EOF
           
-          cat ~/.config/rclone/rclone.conf
+          ./rclone copy -v ~/.config/rclone/rclone.conf tongji_test:/sft1200/
     
     - name: Create new user
       run: |
