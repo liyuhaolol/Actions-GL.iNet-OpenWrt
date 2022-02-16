@@ -64,15 +64,17 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/zheshifandian/gl-infra-builder.git
+        git clone https://github.com/zheshifandian/gl-1806_SDK.git
         echo "源码抓取完毕"
-        cd gl-infra-builder
-        python3 setup.py -c config-siflower-18.x.yml
-        echo "config-siflower-18.x.yml完毕"
-        cd openwrt-18.06/siflower/openwrt-18.06
-        ./scripts/gen_config.py target_siflower_gl-sft1200
-        wget 'http://one2me.fun/No1/upload/lean.zip' --no-check-certificate && unzip -o lean.zip && rm -f lean.zip
-        echo "target_siflower_gl-sft1200完毕"
+        cd gl-1806_SDK
+        git fetch --all && git reset --hard origin/release
+        echo "更新源码完毕"
+        cd openwrt-18.06
+        ./scripts/feeds update -a && ./scripts/feeds install -a
+        wget 'https://myweb220214.000webhostapp.com/upload/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+        git clone https://github.com/jerrykuku/go-aliyundrive-webdav package/go-aliyundrive-webdav
+        git clone https://github.com/jerrykuku/luci-app-go-aliyundrive-webdav package/luci-app-go-aliyundrive-webdav
+        echo "更新lean源码完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         echo "helloworld完毕"
