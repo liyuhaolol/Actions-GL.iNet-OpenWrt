@@ -12,7 +12,7 @@ on:
         default: 'false'
 
 env:
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
@@ -32,18 +32,6 @@ jobs:
         sudo apt-get full-upgrade -y
         sudo apt-get install -y expect ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler ecj fastjar flex gawk gettext gcc-multilib g++-multilib git git-core gperf haveged help2man intltool lib32gcc1 libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncurses5-dev libreadline-dev libssl-dev libtool libz-dev lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip python3-ply python-docutils qemu-utils re2c rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
         echo "update完成"
-        
-    - name: Rclone-Install
-      run: wget 'https://raw.githubusercontent.com/wekingchen/my-file/master/rclone/rclone.zip' --no-check-certificate && sudo unzip rclone.zip && sudo chmod a+x rclone && sudo rm -f rclone.zip
-    - name: Rclone-Config
-      env:
-          RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
-      run: |
-          # 写配置文件
-          mkdir -p ~/.config/rclone/
-          cat << EOF > ~/.config/rclone/rclone.conf
-          $RCLONE_CONFIG
-          EOF
     
     - name: Create new user
       run: |
@@ -64,16 +52,15 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/zheshifandian/gl-infra-builder.git
+        git clone https://github.com/zheshifandian/gl-1806_SDK.git
         echo "源码抓取完毕"
-        cd gl-infra-builder
-        python3 setup.py -c config-siflower-18.x.yml
-        echo "config-siflower-18.x.yml完毕"
-        cd openwrt-18.06/siflower/openwrt-18.06
-        ./scripts/gen_config.py target_siflower_gl-sft1200
-        echo "target_siflower_gl-sft1200完毕"
-        # wget 'https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/myfiles/travelmate.zip' --no-check-certificate && sudo unzip -o travelmate.zip && sudo rm -f travelmate.zip
-        # echo "最新travelmate代码"
+        cd gl-1806_SDK
+        git fetch --all && git reset --hard origin/release
+        echo "更新源码完毕"
+        cd openwrt-18.06
+        ./scripts/feeds update -a && ./scripts/feeds install -a
+        wget 'https://myweb220214.000webhostapp.com/upload/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
+        echo "更新lean源码完毕"
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         echo "helloworld完毕"
@@ -82,7 +69,7 @@ jobs:
         echo "feeds更新完毕"
         rm -rf .config
         echo "删除配置完毕"
-        wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/.config
+        wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/ssr/.config
         echo "配置抓取完毕"
         make -j8 download V=s
         echo "下载完毕"
@@ -91,26 +78,6 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
-
-    - name: Rclone-Run
-      run: |
-          # Rclone-Run
-          # 延迟函数
-          delay()
-          {
-          random_time=$(($RANDOM % $1))
-          echo "等待 ${random_time} 分钟后开始同步"
-          for((i=1;i<=${random_time};i++));  
-          do
-          echo "倒计时 $[${random_time}-$i] 分钟"
-          sleep 1m
-          done
-          }
-          # 随机延迟0~15分钟后再进行操作,可自行设置时间
-          delay 1
-          pwd
-          ./rclone sync --user-agent "NONISV|Microsoft|Microsoft OneDrive for Windows/21.245.1128.0002" -v /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/ tongji_test:/sft1200/ssr/
-          echo "SharePoint上传完毕"
 
     - name: Check space usage
       if: (!cancelled())
@@ -127,8 +94,8 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd "/home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/targets/*/*"
-        rm -rf packages
+        cd "/home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/"
+        
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
     - name: Upload firmware directory
@@ -138,30 +105,12 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Upload firmware to cowtransfer
-      id: cowtransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
-    - name: Upload firmware to WeTransfer
-      id: wetransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
-        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
     - name: Generate release tag
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
