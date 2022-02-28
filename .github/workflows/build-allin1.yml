@@ -12,7 +12,7 @@ on:
         default: 'false'
 
 env:
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
