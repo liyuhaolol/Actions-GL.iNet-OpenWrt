@@ -1,0 +1,6 @@
+src-git gl https://github.com/gl-inet/gl-feeds.git;18.06
+src-git packages https://github.com/coolsnowwolf/packages
+src-git luci https://github.com/coolsnowwolf/luci
+src-git passwall https://github.com/xiaorouji/openwrt-passwall.git
+src-git routing https://git.openwrt.org/feed/routing.git^1b9d1c419f0ecefda51922a7845ab2183d6acd76
+src-git telephony https://git.openwrt.org/feed/telephony.git^b9d7b321d15a44c5abb9e5d43a4ec78abfd9031b
