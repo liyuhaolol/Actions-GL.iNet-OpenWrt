@@ -64,13 +64,15 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/gl-inet/gl-infra-builder.git
+        git clone https://github.com/zheshifandian/gl-1806_SDK.git
         echo "源码抓取完毕"
-        cd gl-infra-builder
-        python3 setup.py -c config-siflower-18.x.yml
+        cd gl-1806_SDK/openwrt-18.06
+        
+        svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav feeds/packages/net/aliyundrive-webdav
+        svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav feeds/luci/applications/luci-app-aliyundrive-webdav
+        
+        ./scripts/feeds update -a && ./scripts/feeds install -a
         echo "更新源码完毕"
-        cd openwrt-18.06/siflower/openwrt-18.06
-        ./scripts/gen_config.py target_siflower_gl-sft1200
         
         # rm -rf feeds.conf.default
         # wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/all/feeds.conf.default
@@ -81,14 +83,14 @@ jobs:
         # git clone https://github.com/jerrykuku/luci-app-go-aliyundrive-webdav package/luci-app-go-aliyundrive-webdav
         # echo "更新go-aliyundrive-webdav源码完毕"
 
-        # rm -rf .config
-        # echo "删除配置完毕"
-        # wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/all/.config
-        # echo "配置抓取完毕"
+        rm -rf .config
+        echo "删除配置完毕"
+        wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/all/.config
+        echo "配置抓取完毕"
         
         make -j8 download V=s
         echo "下载完毕"
-        make -j1 V=s
+        make -j1 V=99
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
