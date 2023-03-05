@@ -52,15 +52,11 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/zheshifandian/gl-1806_SDK.git
+        git clone https://github.com/zheshifandian/openwrt-sf1200.git
         echo "源码抓取完毕"
-        cd gl-1806_SDK
-        git fetch --all && git reset --hard origin/release
-        echo "更新源码完毕"
-        cd openwrt-18.06
+        cd openwrt-sf1200/openwrt-18.06
         ./scripts/feeds update -a && ./scripts/feeds install -a
-        wget 'https://myweb220214.000webhostapp.com/upload/package.zip' --no-check-certificate && unzip -o package.zip && rm -f package.zip
-        echo "更新lean源码完毕"
+
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         echo "helloworld完毕"
