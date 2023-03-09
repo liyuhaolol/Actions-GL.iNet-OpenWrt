@@ -52,10 +52,10 @@ jobs:
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git clone https://github.com/zheshifandian/openwrt-sf1200.git
+        git clone https://github.com/gl-inet/gl-infra-builder.git && cd gl-infra-builder
         echo "源码抓取完毕"
-        cd openwrt-sf1200/openwrt-18.06
-        ./scripts/feeds update -a && ./scripts/feeds install -a
+        python3 setup.py -c ./configs/config-siflower-18.x.yml && cd openwrt-18.06/siflower/openwrt-18.06
+        ./scripts/gen_config.py target_siflower_gl-sft1200 luci
 
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
