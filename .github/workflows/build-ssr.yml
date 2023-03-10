@@ -62,6 +62,12 @@ jobs:
         echo "helloworld完毕"
         ./scripts/feeds update helloworld
         ./scripts/feeds install -a -f -p helloworld
+        echo "src-git gl https://github.com/gl-inet/gl-feeds.git;18.06" >> "feeds.conf.default"
+        echo "src-git luci2 https://github.com/coolsnowwolf/luci" >> "feeds.conf.default"
+        echo "src-git packages2 https://github.com/coolsnowwolf/packages" >> "feeds.conf.default"
+        ./scripts/feeds clean
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
         echo "feeds更新完毕"
         rm -rf .config
         echo "删除配置完毕"
