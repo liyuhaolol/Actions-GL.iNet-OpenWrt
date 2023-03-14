@@ -87,6 +87,7 @@ jobs:
         echo "golang新版更新完毕"
         rm -rf package/libs/openssl
         svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
+        wget -P include https://raw.githubusercontent.com/coolsnowwolf/lede/master/include/openssl-engine.mk
         echo "openssl更新完毕"
         rm -rf .config
         echo "删除配置完毕"
