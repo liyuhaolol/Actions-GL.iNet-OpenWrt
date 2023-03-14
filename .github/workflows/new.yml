@@ -80,6 +80,11 @@ jobs:
         rm -rf feeds/luci2/applications/luci-app-aliyundrive-webdav
         svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav feeds/luci2/applications/luci-app-aliyundrive-webdav
         echo "app更新完毕"
+        rm -rf feeds/packages/lang/golang
+        rm -rf feeds/packages2/lang/golang
+        svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
+        svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages2/lang/golang
+        echo "golang新版更新完毕"
         rm -rf .config
         echo "删除配置完毕"
         wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/newssr/.config
