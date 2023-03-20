@@ -1,4 +1,4 @@
-name: New SSR
+name: Build SFT1200 OpenWrt
 
 on:
   schedule:
