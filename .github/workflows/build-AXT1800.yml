@@ -1,4 +1,4 @@
-name: AXT1800
+name: Build AXT1800 OpenWrt
 
 on:
   schedule:
