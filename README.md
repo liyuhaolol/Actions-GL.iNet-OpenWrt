@@ -1,3 +1,3 @@
 # Build OpenWrt
 
-自动编译我的SFT1200固件
+每日自动编译我的GL固件
