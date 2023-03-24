@@ -1,4 +1,4 @@
-name: Build SFT1200 OpenWrt
+name: Build SFT1200 OpenWrt-test
 
 on:
   repository_dispatch:
