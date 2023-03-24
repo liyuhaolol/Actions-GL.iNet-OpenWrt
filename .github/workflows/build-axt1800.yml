@@ -1,8 +1,8 @@
 name: Build AXT1800 OpenWrt
 
 on:
-  schedule:
-    - cron: 0 11 * * *
+  #schedule:
+    #- cron: 0 11 * * *
   repository_dispatch:
   workflow_dispatch:
     inputs:
