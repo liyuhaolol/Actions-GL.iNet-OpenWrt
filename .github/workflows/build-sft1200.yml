@@ -13,7 +13,7 @@ on:
 
 env:
   UPLOAD_FIRMWARE: true
-  UPLOAD_RELEASE: false
+  UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -142,7 +142,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.FIRMWARE }}/targets/siflower/openwrt-*squashfs*
+        files: /home/runner/work/Actions-SFT1200-OpenWrt/Actions-SFT1200-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/bin/targets/siflower/openwrt-*squashfs*
 
     - name: Delete workflow runs
       uses: wekingchen/delete-workflow-runs@main
