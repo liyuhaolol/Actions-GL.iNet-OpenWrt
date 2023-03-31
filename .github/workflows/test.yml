@@ -74,6 +74,7 @@ jobs:
         ./scripts/feeds update PWluci
         ./scripts/feeds install -a -f -p PWluci
         echo "feeds更新完毕"
+        svn co https://github.com/coolsnowwolf/lede/trunk/tools/ninja tools/ninja
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/adbyby
         rm -rf feeds/packages/net/zerotier
         svn co https://github.com/coolsnowwolf/packages/trunk/net/zerotier feeds/packages/net/zerotier
