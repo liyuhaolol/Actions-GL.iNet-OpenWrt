@@ -88,6 +88,7 @@ jobs:
         svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
         svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages2/lang/golang
         echo "golang新版更新完毕"
+        wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/dl/
         # rm -rf package/libs/openssl
         # wget 'https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/myfiles/openssl.zip' --no-check-certificate && unzip -o openssl.zip && rm -f openssl.zip
         # svn co https://github.com/coolsnowwolf/lede/trunk/package/libs/openssl package/libs/openssl
