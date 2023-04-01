@@ -81,6 +81,7 @@ jobs:
         svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav feeds/packages2/multimedia/aliyundrive-webdav
         rm -rf feeds/luci2/applications/luci-app-aliyundrive-webdav
         svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav feeds/luci2/applications/luci-app-aliyundrive-webdav
+        wget https://gitee.com/raymondqu/openwrt_lede_dl/raw/master/board-2.bin.ddcec9efd245da9365c474f513a855a55f3ac7fe -P /home/runner/work/Actions-GL.iNet-OpenWrt/Actions-GL.iNet-OpenWrt/gl-infra-builder/openwrt-18.06/siflower/openwrt-18.06/dl/
         echo "app更新完毕"
         rm -rf feeds/packages/lang/golang
         rm -rf feeds/packages2/lang/golang
