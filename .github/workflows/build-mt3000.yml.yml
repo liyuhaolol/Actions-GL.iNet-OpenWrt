@@ -56,6 +56,10 @@ jobs:
         git checkout v4.2.0_mt3000_release1
         python3 setup.py -c configs/config-mt798x-7.6.6.1.yml && cd mt7981
         ./scripts/gen_config.py target_mt7981_gl-mt3000 luci
+        git clone https://github.com/gl-inet/glinet4.x.git
+        cp ./glinet4.x/pkg_config/gl_pkg_config_mt3000.mk  ./glinet4.x/mt7981/gl_pkg_config.mk
+        cp ./glinet4.x/pkg_config/glinet_depends_mt3000.yml  ./profiles/glinet_depends.yml
+        ./scripts/gen_config.py glinet_depends
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         echo "helloworld完毕"
@@ -67,7 +71,7 @@ jobs:
         # echo "配置抓取完毕"
         make -j8 download V=s
         echo "下载完毕"
-        make -j5 V=s
+        make -j5 V=s GL_PKGDIR=`pwd`/glinet4.x/mt7981/
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
