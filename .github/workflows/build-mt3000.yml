@@ -52,10 +52,11 @@ jobs:
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
         git clone https://github.com/gl-inet/gl-infra-builder.git && cd gl-infra-builder
-        echo "源码抓取完毕"
         git checkout v4.2.0_mt3000_release1
         python3 setup.py -c configs/config-mt798x-7.6.6.1.yml && cd mt7981
         ./scripts/gen_config.py target_mt7981_gl-mt3000 luci
+        echo "源码抓取完毕"
+        wget https://github.com/coolsnowwolf/lede/raw/master/include/meson.mk  -P ./include/
         sed -i "/helloworld/d" "feeds.conf.default"
         echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
         ./scripts/feeds update helloworld
