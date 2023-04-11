@@ -80,6 +80,14 @@ jobs:
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt package/vsftpd-alt
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wol package/wol
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/upx package/upx
+
+        #luci-app-openclash
+        svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
+        # 编译 po2lmo (如果有po2lmo可跳过)
+        pushd package/luci-app-openclash/tools/po2lmo
+        make && sudo make install
+        popd
+        
         rm -rf .config
         echo "删除配置完毕"
         wget https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/mt3000/.config
@@ -91,6 +99,7 @@ jobs:
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
