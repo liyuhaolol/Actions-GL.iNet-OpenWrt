@@ -72,6 +72,14 @@ jobs:
         echo "src-git PWluci https://github.com/xiaorouji/openwrt-passwall.git;luci" >> "feeds.conf.default"
         ./scripts/feeds update PWluci
         ./scripts/feeds install -a -f -p PWluci
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/libcryptopp package/libcryptopp
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/adbyby
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/e2guardian package/e2guardian
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/noddos package/noddos
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ps3netsrv package/ps3netsrv
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt package/vsftpd-alt
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wol package/wol
+        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/upx package/upx
         # rm -rf .config
         # echo "删除配置完毕"
         # wget https://github.com/201821143044/Actions-SFT1200-OpenWrt/raw/main/newssr/.config
