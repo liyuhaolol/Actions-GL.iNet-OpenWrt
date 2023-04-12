@@ -90,6 +90,10 @@ jobs:
         make && sudo make install
         popd
         
+        #删除packages源码改用packages2
+        rm -rf feeds/packages/net/haproxy
+        rm -rf feeds/packages/net/kcptun
+        
         #同步zerotier源码到最新版
         rm -rf feeds/packages/net/zerotier
         svn co https://github.com/coolsnowwolf/packages/trunk/net/zerotier feeds/packages/net/zerotier
