@@ -90,10 +90,15 @@ jobs:
         make && sudo make install
         popd
         
-        #删除packages源码改用packages2
+        #同步curl源码到最新版
+        rm -rf feeds/packages/net/curl
+        svn co https://github.com/coolsnowwolf/packages/trunk/net/curl feeds/packages/net/curl
+        #同步haproxy源码到最新版
         rm -rf feeds/packages/net/haproxy
+        svn co https://github.com/coolsnowwolf/packages/trunk/net/haproxy feeds/packages/net/haproxy
+        #同步kcptun源码到最新版
         rm -rf feeds/packages/net/kcptun
-        
+        svn co https://github.com/coolsnowwolf/packages/trunk/net/kcptun feeds/packages/net/kcptun
         #同步zerotier源码到最新版
         rm -rf feeds/packages/net/zerotier
         svn co https://github.com/coolsnowwolf/packages/trunk/net/zerotier feeds/packages/net/zerotier
