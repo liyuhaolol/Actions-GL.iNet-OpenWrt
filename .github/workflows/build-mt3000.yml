@@ -77,7 +77,6 @@ jobs:
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/libcryptopp package/libcryptopp
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/adbyby
         #svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/e2guardian package/network/services/e2guardian
-        git clone https://github.com/coolsnowwolf/lede.git --depth 1 --branch master --single-branch package/network/services/e2guardian package/network/services/e2guardian
         svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/noddos package/network/services/noddos
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ps3netsrv package/ps3netsrv
         svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt package/vsftpd-alt
