@@ -1,8 +1,6 @@
 name: Build MT3000 OpenWrt
 
 on:
-  schedule:
-    - cron: 0 5 * * *
   repository_dispatch:
   workflow_dispatch:
     inputs:
