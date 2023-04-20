@@ -74,35 +74,7 @@ jobs:
         echo "src-git PWluci https://github.com/xiaorouji/openwrt-passwall.git;luci" >> "feeds.conf.default"
         ./scripts/feeds update PWluci
         ./scripts/feeds install -a -f -p PWluci
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/libcryptopp package/libcryptopp
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/adbyby package/adbyby
         wget 'https://github.com/201821143044/Actions-GL.iNet-OpenWrt/raw/main/myfiles/mt3000.zip' --no-check-certificate && unzip -o mt3000.zip && rm -f mt3000.zip
-        #svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/e2guardian package/network/services/e2guardian
-        #svn co https://github.com/coolsnowwolf/lede/trunk/package/network/services/noddos package/network/services/noddos
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ps3netsrv package/ps3netsrv
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vsftpd-alt package/vsftpd-alt
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/wol package/wol
-        svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/upx package/upx
-
-        #抓取luci-app-openclash源码
-        svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
-        # 编译 po2lmo (如果有po2lmo可跳过)
-        pushd package/luci-app-openclash/tools/po2lmo
-        make && sudo make install
-        popd
-        
-        #同步curl源码到最新版
-        rm -rf feeds/packages/net/curl
-        svn co https://github.com/coolsnowwolf/packages/trunk/net/curl feeds/packages/net/curl
-        #同步haproxy源码到最新版
-        rm -rf feeds/packages/net/haproxy
-        svn co https://github.com/coolsnowwolf/packages/trunk/net/haproxy feeds/packages/net/haproxy
-        #同步kcptun源码到最新版
-        rm -rf feeds/packages/net/kcptun
-        svn co https://github.com/coolsnowwolf/packages/trunk/net/kcptun feeds/packages/net/kcptun
-        #同步zerotier源码到最新版
-        rm -rf feeds/packages/net/zerotier
-        svn co https://github.com/coolsnowwolf/packages/trunk/net/zerotier feeds/packages/net/zerotier
         
         rm -rf .config
         echo "删除配置完毕"
